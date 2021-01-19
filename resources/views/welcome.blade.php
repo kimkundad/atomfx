@@ -141,7 +141,7 @@
 		<div class="col-md-4">
 
 			<!-- Image Box -->
-			<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="{{ url('assets/img/img2.jpg') }}">
+			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img2.jpg') }}">
 				<div class="img-box-content visible">
 				
 					<span>ใช้ EA ในการเทรดกับ ใช้คนเทรด ต่างกันอย่างไร</span>
@@ -153,7 +153,7 @@
 		<div class="col-md-8">
 
 			<!-- Image Box -->
-			<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="{{ url('assets/img/img1.png') }}">
+			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img1.png') }}">
 				<div class="img-box-content visible">
 					<span>ATomFXs หุ่นยนต์เทรดอัตโนมัติs</span>
 				</div>
@@ -164,7 +164,7 @@
 		<div class="col-md-8">
 
 			<!-- Image Box -->
-			<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="{{ url('assets/img/img4.png') }}">
+			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img4.png') }}">
 				<div class="img-box-content visible">
 					<span>AtomFXs-Fund Screenshot</span>
 				</div>
@@ -175,7 +175,7 @@
 		<div class="col-md-4">
 
 			<!-- Image Box -->
-			<a href="listings-list-with-sidebar.html" class="img-box" data-background-image="{{ url('assets/img/img3.png') }}">
+			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img3.png') }}">
 				<div class="img-box-content visible">
 					
 					<span>AtomFXs-TradingView</span>
