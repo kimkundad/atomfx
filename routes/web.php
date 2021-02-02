@@ -33,7 +33,41 @@ Route::get('/blog_detail/{id}', 'HomeController@blog_post');
 
 Route::post('/api/add_contact', 'HomeController@add_contact')->name('add_contact');
 
+Route::get('/ราคาแพ็กเกจ', 'HomeController@package');
+Route::get('/แจ้งการชำระเงิน', 'HomeController@user_pay');
+
+Route::get('/แจ้งการชำระเงิน', 'HomeController@user_pay');
+Route::get('/confirm_payment_success', 'HomeController@confirm_payment_success');
+
+
+Route::post('/post_confirm_payment', 'HomeController@post_confirm_payment')->name('post_confirm_payment');
+
+Route::group(['middleware' => ['UserRole:manager|employee|customer']], function() {
+
+    Route::get('/my_dashboard', 'ProfileController@my_dashboard');
+
+    Route::get('/add_my_package/{id}', 'ProfileController@add_my_package');
+    Route::post('/submit_package', 'ProfileController@submit_package');
+    Route::get('api/del_my_package/{id}', 'ProfileController@del_my_package');
+
+    Route::get('/edit_my_package/{id}', 'ProfileController@edit_my_package');
+    Route::post('/submit_edit_package', 'ProfileController@submit_edit_package');
+    
+
+});
+
 Route::group(['middleware' => ['UserRole:manager|employee']], function() {
+
+    
+    Route::get('admin/payment', 'PaymentsController@index')->name('index');
+    Route::post('api/pay_status', 'PaymentsController@pay_status')->name('pay_status');
+    Route::get('api/del_pay/{id}', 'PaymentsController@del_pay')->name('del_pay');
+
+
+    Route::resource('admin/order', 'OrderController');
+    Route::get('api/del_order/{id}', 'OrderController@del_order')->name('del_order');
+    Route::get('api/user_search', 'OrderController@user_search')->name('user_search');
+
 
 
     Route::get('admin/dashboard', 'DashboardController@index');
@@ -43,6 +77,14 @@ Route::group(['middleware' => ['UserRole:manager|employee']], function() {
     Route::post('api/post_pics', 'DashboardController@post_pics')->name('post_pics');
 
     Route::resource('admin/blog', 'BlogController');
+    Route::resource('admin/package', 'PackageController');
+    Route::resource('admin/broker', 'BrokerController');
+
+    Route::get('api/del_broker/{id}', 'BrokerController@del_broker')->name('del_broker');
+    Route::post('api/broker_status', 'BrokerController@broker_status')->name('broker_status');
+    
+    Route::get('api/del_package/{id}', 'PackageController@del_package')->name('del_package');
+
     Route::post('/api/upload_img', 'BlogController@upload_img')->name('home');
     Route::get('api/del_blog/{id}', 'BlogController@del_blog')->name('del_blog');
 

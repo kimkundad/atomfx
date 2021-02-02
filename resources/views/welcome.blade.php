@@ -128,9 +128,9 @@
 
 </div>
 <!-- Info Section / End -->
-
+<!--
 <section class="fullwidth border-top margin-top-70 padding-top-75 padding-bottom-75" data-background-color="#fff">
-<!-- Container -->
+
 <div class="container">
 	<div class="row">
 
@@ -140,7 +140,7 @@
 		
 		<div class="col-md-4">
 
-			<!-- Image Box -->
+		
 			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img2.jpg') }}">
 				<div class="img-box-content visible">
 				
@@ -152,7 +152,6 @@
 			
 		<div class="col-md-8">
 
-			<!-- Image Box -->
 			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img1.png') }}">
 				<div class="img-box-content visible">
 					<span>ATomFXs หุ่นยนต์เทรดอัตโนมัติs</span>
@@ -163,7 +162,7 @@
 
 		<div class="col-md-8">
 
-			<!-- Image Box -->
+	
 			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img4.png') }}">
 				<div class="img-box-content visible">
 					<span>AtomFXs-Fund Screenshot</span>
@@ -174,7 +173,7 @@
 			
 		<div class="col-md-4">
 
-			<!-- Image Box -->
+
 			<a href="#" class="img-box" data-background-image="{{ url('assets/img/img3.png') }}">
 				<div class="img-box-content visible">
 					
@@ -186,9 +185,9 @@
 
 	</div>
 </div>
-<!-- Container / End -->
-</section>
-<!-- Pricing Tables / End -->
+
+</section> -->
+
 
 <!-- Pricing Tables -->
 <section class="fullwidth border-top margin-top-70 padding-top-75 padding-bottom-75" data-background-color="#fff">
@@ -214,69 +213,47 @@
 
 				<!-- Plan #1 -->
 
-					<div class="plan">
+					@if(isset($pack))
+					@foreach($pack as $u)
+					<div class="plan 
+					@if(isset($u->text_5))
+					featured
+					@endif
+					">
 
-						<div class="plan-price">
-							<h3>Basic</h3>
-							<span class="value">Free</span>
-							<span class="period">Free of charge one standard listing active for 30 days</span>
-						</div>
-
-						<div class="plan-features">
-							<ul>
-								<li>One Listing</li>
-								<li>30 Days Availability</li>
-								<li>Standard Listing</li>
-								<li>Limited Support</li>
-							</ul>
-							<a class="button border" href="#">Get Started</a>
-						</div>
-
-					</div>
-
-					<!-- Plan #3 -->
-					<div class="plan featured">
-
-						<div class="listing-badge">
+					@if(isset($u->text_5))
+					<div class="listing-badge">
 							<span class="featured">Featured</span>
 						</div>
+					@endif
 
 						<div class="plan-price">
-							<h3>Extended</h3>
-							<span class="value">$9.99</span>
-							<span class="period">One time fee for one listing, highlighted in the search results</span>
-						</div>
-						<div class="plan-features">
-							<ul>
-								<li>One Time Fee</li>
-								<li>One Listing</li>
-								<li>90 Days Availability</li>
-								<li>Featured In Search Results</li>
-								<li>24/7 Support</li>
-							</ul>
-							<a class="button" href="#">Get Started</a>
-						</div>
-					</div>
-
-					<!-- Plan #3 -->
-					<div class="plan">
-
-						<div class="plan-price">
-							<h3>Professional</h3>
-							<span class="value">$19.99</span>
-							<span class="period">Monthly subscription for unlimited listings and availability</span>
+							<h3>{{ $u->name }}</h3>
+							<span class="value">{{ $u->price }}</span>
+							<span class="period">{{ $u->detail }}</span>
 						</div>
 
 						<div class="plan-features">
 							<ul>
-								<li>Unlimited Listings</li>
-								<li>Unlimited Availability</li>
-								<li>Featured In Search Results</li>
-								<li>24/7 Support</li>
+								<li>{{ $u->text_1 }}</li>
+								<li>{{ $u->text_2 }}</li>
+								<li>{{ $u->text_3 }}</li>
+								<li>{{ $u->text_4 }}</li>
 							</ul>
-							<a class="button border" href="#">Get Started</a>
+							@if (Auth::guest())
+							<a class="button border btnSendData" >Get Started</a>
+							@else
+							<a class="button border " href="{{ url('add_my_package/'.$u->id) }}">Get Started</a>
+							@endif
+							
 						</div>
+
 					</div>
+					@endforeach
+					@endif
+
+					
+					
 
 				</div>
 			</div>
@@ -475,6 +452,17 @@
 <script type="text/javascript" src="{{ url('assets/scripts/extensions/revolution.extension.slideanims.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('assets/scripts/extensions/revolution.extension.video.min.js') }}"></script>
 
+<script>
 
+$(document).on('click','.btnSendData',function (event) {
+
+	swal("กรูณา ทำการลงทะเบียนหรือล็อกอินเข้าสู่ระบบก่อน")
+	.then((value) => {
+		window.location.replace("{{url('login')}}");
+});
+
+});
+
+</script>
 
 @stop('scripts')

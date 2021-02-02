@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
 use App\blog;
+use App\bank_payment;
 
 class HomeController extends Controller
 {
@@ -40,8 +41,150 @@ class HomeController extends Controller
 
         $data['blog'] = $blog;
 
+        $pack = DB::table('packages')
+        ->Orderby('id', 'desc')
+        ->limit(3)
+        ->get();
+
+        $data['pack'] = $pack;
+
         return view('welcome', $data);
     }
+
+
+    public function post_confirm_payment(Request $request){
+
+      $image = $request->file('image');
+
+      //dd($request->all());
+      $this->validate($request, [
+           'image' => 'required|max:8048',
+           'name_c' => 'required',
+           'email_c' => 'required',
+           'phone_c' => 'required',
+           'money_c' => 'required',
+           'day_tran' => 'required',
+           'order_id_c' => 'required'
+       ]);
+
+
+       $check = DB::table('orders')
+       ->where('order_id', $request['order_id_c'])
+       ->count();
+
+       if($check > 0){
+
+         $get_code = DB::table('orders')
+         ->where('order_id', $request['order_id_c'])
+         ->first();
+
+         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+
+         $img = Image::make($image->getRealPath());
+         $img->resize(800, 800, function ($constraint) {
+         $constraint->aspectRatio();
+       })->save('img/slip/'.$input['imagename']);
+
+       $input['imagename_small'] = time().'_small.'.$image->getClientOriginalExtension();
+
+        $img = Image::make($image->getRealPath());
+        $img->resize(240, 240, function ($constraint) {
+        $constraint->aspectRatio();
+      })->save('img/slip/'.$input['imagename_small']);
+
+         $package = new bank_payment();
+          $package->order_id_c = $request['order_id_c'];
+          $package->name_c = $request['name_c'];
+          $package->email_c = $request['email_c'];
+          $package->phone_c = $request['phone_c'];
+          $package->bank = $request['bank'];
+          $package->image = $input['imagename'];
+          $package->money_c = $request['money_c'];
+          $package->day_tran = $request['day_tran'];
+          $package->time_tran = $request['time_tran'];
+          $package->re_mark = $request['re_mark'];
+          $package->save();
+
+
+
+          $message = $request['name_c']." ได้ทำการแจ้งชำระเงินมาที่ Order ID : ".$request['order_id_c']." เบอร์ : ".$request['phone_c'];
+
+
+              $image_thumbnail_url = url('img/slip/'.$input['imagename_small']);  // max size 240x240px JPEG
+              $image_fullsize_url = url('img/slip/'.$input['imagename']); //max size 1024x1024px JPEG
+              $imageFile = 'copy/240.jpg';
+              $sticker_package_id = '';  // Package ID sticker
+              $sticker_id = '';    // ID sticker
+
+              $message_data = array(
+              'imageThumbnail' => $image_thumbnail_url,
+              'imageFullsize' => $image_fullsize_url,
+              'message' => $message,
+              'imageFile' => $imageFile,
+              'stickerPackageId' => $sticker_package_id,
+              'stickerId' => $sticker_id
+              );
+
+            $lineapi = 'IRiZbKU5DCvEF6HxEvGnKCD5hvLgYitFM0roVALMye8';
+
+            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer '.$lineapi );
+            $mms =  trim($message);
+            $chOne = curl_init();
+            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($chOne, CURLOPT_POST, 1);
+            curl_setopt($chOne, CURLOPT_POSTFIELDS, $message_data);
+            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($chOne);
+            if(curl_error($chOne)){
+            echo 'error:' . curl_error($chOne);
+            }else{
+            $result_ = json_decode($result, true);
+          //  echo "status : ".$result_['status'];
+          //  echo "message : ". $result_['message'];
+            }
+            curl_close($chOne);
+
+
+
+          return redirect(url('confirm_payment_success/'))->with('add_success','คุณทำการเพิ่มอสังหา สำเร็จ');
+
+       }else{
+          return redirect(url('แจ้งการชำระเงิน/'))->with('error_confirm','คุณทำการเพิ่มอสังหา สำเร็จ');
+       }
+
+
+
+
+    }
+
+    public function user_pay(){
+      $data['obj'] = 'confirm_payment';
+      return view('user_pay', $data);
+    }
+
+    public function confirm_payment_success(){
+      $data['obj'] = 'confirm_payment';
+      return view('confirm_payment_success', $data);
+    }
+
+    
+
+    public function package(){
+      $pack = DB::table('packages')
+        ->Orderby('id', 'desc')
+        ->limit(3)
+        ->get();
+
+        $data['pack'] = $pack;
+
+        return view('package', $data);
+    }
+
+   
 
     public function about()
     {

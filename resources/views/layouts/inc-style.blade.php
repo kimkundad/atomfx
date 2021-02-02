@@ -13,6 +13,13 @@
     width: 80%;
 
 }
+#logo {
+    margin-right: 20px;
+}
+#navigation.style-1 ul a {
+    line-height: 32px;
+    padding: 5px 7px;
+}
 h2.headline span {
     font-size: 17px;
     line-height: 27px;

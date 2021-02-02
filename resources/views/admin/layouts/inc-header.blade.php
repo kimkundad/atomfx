@@ -46,6 +46,22 @@
               <a href="{{ url('admin/blog') }}" class="nav-link"><i class="link-icon icon-pin"></i><span class="menu-title">บทความ</span></a>
             </li>
 
+            <li class="nav-item">
+              <a href="{{ url('admin/package') }}" class="nav-link"><i class="link-icon icon-layers"></i><span class="menu-title">Package</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ url('admin/broker') }}" class="nav-link"><i class="link-icon icon-pin"></i><span class="menu-title">Broker</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ url('admin/order') }}" class="nav-link"><i class="link-icon icon-wallet"></i><span class="menu-title">Orders</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ url('admin/payment') }}" class="nav-link"><i class="link-icon icon-refresh "></i><span class="menu-title">แจ้งชำระเงิน</span></a>
+            </li>
+
            
             <li class="nav-item">
               <a href="{{ url('admin/slide_show') }}" class="nav-link"><i class="link-icon icon-disc"></i><span class="menu-title">รูปสไลด์</span></a>
