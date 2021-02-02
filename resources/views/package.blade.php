@@ -19,13 +19,13 @@ Pricing Tables || Wealth Angels
 		<div class="row">
 			<div class="col-md-12">
 
-				<h2>ราคาแพ็กเกจ</h2>
+				<h2>แพ็กเกจ</h2>
 
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
 						<li><a href="{{ url('/') }}">Home</a></li>
-						<li>ราคาแพ็กเกจ</li>
+						<li>แพ็กเกจ</li>
 					</ul>
 				</nav>
 
