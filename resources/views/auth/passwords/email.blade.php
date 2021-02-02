@@ -1,47 +1,82 @@
-@extends('layouts.app')
+
+
+@extends('layouts.template')
+
+@section('ga')
+window.gaTitle = 'หน้าแรก';
+@endsection
+
+@section('stylesheet')
+
+@stop('stylesheet')
 
 @section('content')
+
+<section class="fullwidth padding-top-75 padding-bottom-75" data-background-color="#fff">
+
+<!-- Container / Start -->
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+	<div class="row justify-content-around">
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+		<!-- Contact Form -->
+		<div class="col-lg-8 col-lg-offset-2">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+			<section id="contact ">
+				<h4 class="headline margin-bottom-35">{{ __('Reset Password') }}</h4>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+				<div id="contact-message"></div> 
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
+
+                
+                
+
+                @error('email')
+                <div class="notification error closeable">
+				<p> {{ $message }}</p>
+				<a class="close"></a>
+			    </div>
+                @enderror
+
+                <div class="sign-in-form style-1">
+                <form method="POST" action="{{ route('password.email') }}" class="login">
+                @csrf
+                    <p class="form-row form-row-wide">
+                        <label for="username">Email:
+                            <i class="im im-icon-Male"></i>
+                            <input type="text" class="input-text" name="email" placeholder="Email Address" />
+                        </label>
+                    </p>
+
+                    
+                    
+
+                    <br>
+                        <input type="submit" class="button border margin-top-5" name="login" value="เข้าสู่ระบบ" />
+
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div>
+                    <br><br><br><br><br><br><br><br>
+			</section>
+		</div>
+        
+		<!-- Contact Form / End -->
+
+	</div>
+
 </div>
+<!-- Container / End -->
+
+</section>
+
+
+
+
+
 @endsection
+
+@section('scripts')
+
+
+@stop('scripts')
