@@ -58,9 +58,16 @@ window.gaTitle = 'หน้าแรก';
                       
 						@if(isset($objs))
                       @foreach($objs as $u)
-                         
+                         <?php 
+
+                          $datediff = strtotime(($u->end)) - strtotime((date("Y-m-d")));
+                          $days = floor($datediff / (60 * 60 * 24));
+                          if($days < 0){
+                            $days = 0;
+                          }
+                         ?>
                           <tr>
-                          <td> {{$u->order_id}}</td>
+                          <td> {{$u->order_id}} {{ date("Y-m-d") }} {{$u->end }}</td>
                             <td>
                             <img src="{{ url('assets/img/avatar/'.$u->avatar) }}" alt="profile"/> {{$u->name_u}} 
                             </td>
@@ -71,7 +78,7 @@ window.gaTitle = 'หน้าแรก';
                               {{$u->name_b}}
                             </td>
                             <td>
-                            {{$u->total}} วัน
+                            {{$days}} วัน
                             </td>
                             <td>
                               @if($u->status_x == 0)

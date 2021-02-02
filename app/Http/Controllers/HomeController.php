@@ -34,12 +34,28 @@ class HomeController extends Controller
 
         $data['slide'] = $slide;
 
-        $blog = DB::table('blogs')
-        ->Orderby('id', 'desc')
-        ->limit(3)
+       
+
+        $blog = DB::table('categories')
+        ->where('id', '!=', 1)
         ->get();
 
-        $data['blog'] = $blog;
+            foreach ($blog as $obj) {
+
+              $count = DB::table('blogs')
+                  ->where('type', $obj->id)
+                  ->count();
+
+                $obj->count = $count;
+             
+                $options = DB::table('blogs')
+                  ->where('type', $obj->id)
+                  ->get();
+
+                $obj->option = $options;
+              }
+             // dd($blog);
+              $data['blog'] = $blog;
 
         $pack = DB::table('packages')
         ->Orderby('id', 'desc')

@@ -18,13 +18,26 @@ class BlogController extends Controller
     public function index()
     {
 
-        $objs = DB::table('blogs')
-                ->Orderby('id', 'desc')
-                ->paginate(15);
+      $objs = DB::table('blogs')->select(
+        'blogs.*',
+        'blogs.id as id_q',
+        'blogs.created_at as create',
+        'blogs.status as status_x',
+        'categories.*',
+        'categories.name as name_u'
+        )
+        ->leftjoin('categories', 'categories.id',  'blogs.type')
+        ->Orderby('blogs.id', 'desc')
+        ->paginate(15);
+
 
         $data['objs'] = $objs;
         return view('admin.blog.index', $data);
     }
+  
+    
+
+    
 
 
     public function blog_index(){
@@ -34,6 +47,7 @@ class BlogController extends Controller
 
       $data['objs'] = $objs;
       return view('admin.blog.blog_index', $data);
+
     }
 
     public function blog_status(Request $request){
@@ -64,6 +78,8 @@ class BlogController extends Controller
     public function create()
     {
         //
+        $cat = DB::table('categories')->get();
+        $data['objs'] = $cat;
         $data['method'] = "post";
         $data['url'] = url('admin/blog');
         return view('admin.blog.create', $data);
@@ -135,6 +151,9 @@ class BlogController extends Controller
     public function edit($id)
     {
         //
+        $cat = DB::table('categories')->get();
+        $data['obj'] = $cat;
+
         $objs = blog::find($id);
 
         $data['url'] = url('admin/blog/'.$id);

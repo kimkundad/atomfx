@@ -55,6 +55,10 @@
             </li>
 
             <li class="nav-item">
+              <a href="{{ url('admin/category') }}" class="nav-link"><i class="link-icon icon-ghost"></i><span class="menu-title">หมวดหมู่</span></a>
+            </li>
+
+            <li class="nav-item">
               <a href="{{ url('admin/order') }}" class="nav-link"><i class="link-icon icon-wallet"></i><span class="menu-title">Orders</span></a>
             </li>
 

@@ -121,6 +121,16 @@ body p {
 					<ul>
                     @if(isset($objs))
                     @foreach($objs as $u)
+
+                    <?php 
+
+                          $datediff = strtotime(($u->end)) - strtotime((date("Y-m-d")));
+                          $days = floor($datediff / (60 * 60 * 24));
+                          if($days < 0){
+                            $days = 0;
+                          }
+                         ?>
+
 						<li>
                         <img src="{{ url('img/broker/'.$u->image_b) }}" alt="{{ $u->name_b}}">
                             <p style="margin: 0 0 5px;">ID : <b>{{$u->order_id}}</b></p>
@@ -138,7 +148,7 @@ body p {
                               @endif
 							
 								<li>Account: {{ $u->account_ac }}</li>
-								<li>จำนวนวัน: {{ ($u->total) }}</li>
+								<li>จำนวนวัน: {{ ($days) }}</li>
 							</ul>
 							<div class="buttons-to-right">
                                 <a href="{{ url('edit_my_package/'.$u->id_q) }}" class="button gray"><i class="sl sl-icon-note"></i> Edit</a>

@@ -30,8 +30,9 @@ window.gaTitle = 'หน้าแรก';
 
                           <tr>
                             <th>เรื่อง</th>
-                            <th>ประเภท</th>
-							<th>วันที่</th>
+                            <th>หมวดหมู่</th>
+						            	<th>วันที่</th>
+                          <th>หน้าแรก</th>
                             <th>ดำเนินการ</th>
                           </tr>
                         </thead>
@@ -39,23 +40,29 @@ window.gaTitle = 'หน้าแรก';
                       
 						@if(isset($objs))
                       @foreach($objs as $u)
-                          <tr>
+                          <tr access_id="{{$u->id_q}}">
                             <td>
                               {{$u->title}}
                             </td>
                             <td>
-                              @if($u->type == 0)
-                              Tips
-                              @else
-                              Stories
-                              @endif
+                            {{$u->name_u}}
                             </td>
 							<td>
-                              {{$u->created_at}}
+                              {{$u->create}}
                             </td>
                             <td>
-                              <a href="{{ url('admin/blog/'.$u->id.'/edit') }}" class="btn btn-outline-primary btn-sm">แก้ไข</a>
-                              <a href="{{ url('api/del_blog/'.$u->id) }}" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger btn-sm">ลบ</a>
+                              <div class="form-check form-check-flat">
+                              <label class="form-check-label">
+                                <input class="checkbox" type="checkbox" @if($u->status_x == 1)
+                                  checked="checked"
+                                  @endif>
+                                ปิด / เปิด
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                              <a href="{{ url('admin/blog/'.$u->id_q.'/edit') }}" class="btn btn-outline-primary btn-sm">แก้ไข</a>
+                              <a href="{{ url('api/del_blog/'.$u->id_q) }}" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger btn-sm">ลบ</a>
                             </td>
                           </tr>
                           @endforeach
@@ -79,7 +86,49 @@ window.gaTitle = 'หน้าแรก';
 
 @section('scripts')
 
+<script>
 
+$(document).ready(function(){
+
+
+	$("input.checkbox").change(function(event) {
+
+	var course_id = $(this).closest('tr').attr('access_id');
+
+	console.log('fea : '+course_id);
+	$.ajax({
+					type:'POST',
+					url:'{{url('api/blog_status')}}',
+					headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+					data: { "user_id" : course_id },
+					success: function(data){
+						if(data.data.success){
+
+
+              $.toast({
+                heading: 'Success',
+                text: 'ระบบทำการแก้ไขข้อมูลให้แล้ว.',
+                showHideTransition: 'slide',
+                icon: 'success',
+                loaderBg: '#f96868',
+                position: 'top-right'
+              })
+
+
+
+						}
+					}
+			});
+	});
+
+  	});
+
+
+
+
+
+
+</script>
 
 
 @stop('scripts')

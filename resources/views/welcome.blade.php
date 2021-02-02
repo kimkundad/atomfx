@@ -272,19 +272,21 @@
 <section class="fullwidth padding-top-75 padding-bottom-75" data-background-color="#f9f9f9">
 	<div class="container">
 
+	@if(isset($blog))
+	@foreach($blog as $j)
+		@if($j->count > 0)
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-50">
-				Stories and Tips
-				<span>การตัดสินใจลงทุนอย่างชาญฉลาดด้วยข้อมูลเชิงลึกของนักวิเคราะห์เมื่อเข้าสู่ตลาด และติดตามแนวโน้มที่ล่าสุด</span>
+				{{$j->name}}
 				</h3>
 			</div>
 		</div>
 
 		<div class="row">
 			<!-- Blog Post Item -->
-			@if(isset($blog))
-			@foreach($blog as $u)
+			@if(isset($j->option))
+			@foreach($j->option as $u)
 			<div class="col-md-4">
 				<a href="{{ url('blog_detail/'.$u->id) }}" class="blog-compact-item-container">
 					<div class="blog-compact-item">
@@ -308,12 +310,15 @@
 			@endforeach
 			@endif
 
-			
+		</div>
+		@endif
+		@endforeach
+		@endif
 
+		<div class="row">
 			<div class="col-md-12 centered-content">
 				<a href="{{ url('บทความ') }}" class="button border margin-top-10">View Blog</a>
 			</div>
-
 		</div>
 
 	</div>

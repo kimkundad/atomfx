@@ -58,7 +58,9 @@ Route::group(['middleware' => ['UserRole:manager|employee|customer']], function(
 
 Route::group(['middleware' => ['UserRole:manager|employee']], function() {
 
-    
+    Route::resource('admin/category', 'CategoryController');
+    Route::get('api/del_category/{id}', 'CategoryController@del_category')->name('del_category');
+
     Route::get('admin/payment', 'PaymentsController@index')->name('index');
     Route::post('api/pay_status', 'PaymentsController@pay_status')->name('pay_status');
     Route::get('api/del_pay/{id}', 'PaymentsController@del_pay')->name('del_pay');
@@ -77,6 +79,8 @@ Route::group(['middleware' => ['UserRole:manager|employee']], function() {
     Route::post('api/post_pics', 'DashboardController@post_pics')->name('post_pics');
 
     Route::resource('admin/blog', 'BlogController');
+    Route::post('api/blog_status', 'BlogController@blog_status')->name('blog_status');
+
     Route::resource('admin/package', 'PackageController');
     Route::resource('admin/broker', 'BrokerController');
 
@@ -90,7 +94,6 @@ Route::group(['middleware' => ['UserRole:manager|employee']], function() {
 
     Route::get('admin/index_b', 'BlogController@blog_index');
     
-    Route::post('api/blog_status', 'BlogController@blog_status')->name('blog_status');
 
     Route::resource('admin/slide_show', 'SlideController');
     Route::post('api/slide_status', 'SlideController@slide_status')->name('slide_status');

@@ -24,7 +24,7 @@ window.gaTitle = 'หน้าแรก';
 <div class="col-md-12">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">ข้อมูลบทความ</h4>
+      <h4 class="card-title">ข้อมูลหมวดหมู่</h4>
       <p class="card-description">
         กรอกข้อมูลให้ครบ ในส่วนที่มีเครื่องหมาย <span class="text-danger">*</span>
       </p>
@@ -33,42 +33,12 @@ window.gaTitle = 'หน้าแรก';
         {{ method_field($method) }}
         {{ csrf_field() }}
         <div class="form-group">
-          <label for="exampleInputUsername1">หัวข้อเรื่อง <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="exampleInputUsername1" name="title" value="{{ old('title') }}">
+          <label for="exampleInputUsername1">ชื่อหมวดหมู่ <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" name="name_cat" value="{{ old('name_cat') }}">
         </div>
 
-        <div class="form-group">
-          <label for="exampleInputUsername1">รายละเอียดแบบย่อ <span class="text-danger">*</span></label>
-          <textarea class="form-control" id="textareaAutosize" rows="5" name="sub_title" >{{ old('sub_title') }}</textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">รายละเอียด <span class="text-danger">*</span></label>
-          <textarea class="summernote form-control" id="textareaAutosize" name="detail" >{{ old('detail') }}</textarea>
-        </div>
-
-        <div class="form-group">
-          <br />
-          <label for="exampleInputUsername1">รูปบทความ <span class="text-danger">*</span></label>
-          <input type="file" class="dropify"  name="image" />
-          <br />
-        </div>
-
-        
-        
-
-        <div class="form-group">
-                      <label for="exampleFormControlSelect2">หมวดหมู่บทความ <span class="text-danger">*</span></label>
-                      <select class="form-control" name="type">
-                        <option value="">เลือกหมวดหมู่</option>
-                        @if(isset($objs))
-                        @foreach($objs as $u)
-                        <option value="{{ $u->id }}">{{ $u->name }}</option>
-                        @endforeach
-                        @endif
-                      </select>
-                    </div>
-        
+      
+    
         
         <br />
 

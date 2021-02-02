@@ -53,18 +53,29 @@
           <br />
         </div>
 
+
         <div class="form-group">
-                      <label for="exampleFormControlSelect2">ประเภทบทความ <span class="text-danger">*</span></label>
+                      <label for="exampleFormControlSelect2">หมวดหมู่บทความ <span class="text-danger">*</span></label>
                       <select class="form-control" name="type">
-                        <option value="">เลือกประเถท</option>
-                        <option value="0" @if( $objs->type == 0)
+                        <option value="">เลือกหมวดหมู่</option>
+                        @if(isset($obj))
+                        @foreach($obj as $u)
+                        <option value="{{ $u->id }}" @if( $objs->type == $u->id)
                                         selected='selected'
-                                        @endif>Tips</option>
-                        <option value="1" @if( $objs->type == 1)
-                                        selected='selected'
-                                        @endif>Stories</option>
+                                        @endif>{{ $u->name }}</option>
+                                        
+                        @endforeach
+                        
+                        @endif
+
+
                       </select>
                     </div>
+
+
+
+        
+        
         
         
         <br />
